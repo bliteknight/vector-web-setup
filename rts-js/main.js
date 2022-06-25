@@ -157,7 +157,7 @@ function setupOTAFiles() {
 
     var localOtas = data.message;
 
-    var localUrlPrefix = `http://${_networkIp}:${_serverPort}/static/firmware/${_stack.name}/`;
+    var localUrlPrefix = `http://${_serverIp}:${_serverPort}/static/firmware/${_stack.name}/`;
     var otaUrls = [];
 
     localOtas.map((endpoint) => {
