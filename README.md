@@ -13,6 +13,10 @@ curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y 
 
 The main server listens on https on port 8000, the ota listens on http port 8001
 
+# Running the server
+npm install
+node server.js
+
 # Firmware Install Process
 You can install the escapepod firmware or any firmware you want by adding the file to the ota folder
 
