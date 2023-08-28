@@ -8,6 +8,7 @@ const cors = require("cors");
 const app = express();
 
 let port = process.env.SERVER_PORT || 8000;
+let otaport = process.env.OTA_SERVER_PORT || 8001;
 let serverIp = "0.0.0.0"
 
 var privateKey = fs.readFileSync( 'privkey.pem' );
@@ -52,9 +53,9 @@ https.createServer({
   handleError(err);
 });
 
-
-app.listen(8001, serverIp, () => {
-  console.log(`Server running on port ${8001}`);
+//This is used to serve the non http ota files
+app.listen(otaport, serverIp, () => {
+  console.log(`OTA Server running on port ${otaport}`);
 }).on("error", (err) => {
   handleError(err);
 });
