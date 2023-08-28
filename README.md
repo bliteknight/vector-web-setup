@@ -11,6 +11,8 @@ run Node.js. It is tested on Windows, Mac OSX, and Linux.
 
 curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
 
+The main server listens on https on port 8000, the ota listens on http port 8001
+
 # Firmware Install Process
 You can install the escapepod firmware or any firmware you want by adding the file to the ota folder
 
@@ -20,11 +22,11 @@ It has to be http as Vector cannot do an https handshake when flashing the firmw
 
 e.g. if your PC's IP address is 192.168.0.8 and your ota file is 1.8ep.ota
 place the file in the ota folder and update the variable to
-  let otaEndpoints = "http://192.168.0.8:8000/ota/1.8ep.ota"
+  let otaEndpoints = "http://192.168.0.8:8001/ota/1.8ep.ota"
 
 Alternatively, you can specify what ota file to use by appending the ota parameter in the url
 
-http://192.168.0.8:8000/html/main.html?ota=http://192.168.0.8:8000/ota/1.8ep.ota
+http://192.168.0.8:8000/html/main.html?ota=http://192.168.0.8:8001/ota/1.8ep.ota
 
 That way you can set the otaEndpoints variable to one firmware and flash a different one
 
@@ -38,7 +40,7 @@ connect to wifi - wifi-scan
 wifi-connect "SSID" "password"
 
 
-ota-start https://192.168.0.8:8000/ota/ep-prod-1.8.ota
+ota-start http://localhost:8001/ota/1.8ep.ota
 
 
 
