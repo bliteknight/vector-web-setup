@@ -28,11 +28,15 @@ http://192.168.0.8:8000/html/main.html?ota=http://192.168.0.8:8000/ota/1.8ep.ota
 
 That way you can set the otaEndpoints variable to one firmware and flash a different one
 
-# ALternative - Manuall Install method when pairing
+# Alternative - Manuall Install method when pairing
 uncheck - Enable auto-setup
+
 view status - status
+
 connect to wifi - wifi-scan
+
 wifi-connect "SSID" "password"
+
 
 ota-start https://192.168.0.8:8000/ota/ep-prod-1.8.ota
 
