@@ -13,6 +13,11 @@ curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y 
 
 The main server listens on https on port 8000, the ota listens on http port 8001
 
+#Get Self signed keys
+openssl genrsa -out privkey.pem
+openssl req -new -days 36500 -key privkey.pem -out csr.pem
+openssl x509 -req -days 36500 -in csr.pem -signkey privkey.pem -out privcert.pem
+
 # Running the server
 ```
 npm install

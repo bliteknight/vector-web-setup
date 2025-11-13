@@ -74,6 +74,10 @@ select.vec-field{
   margin:5px;
 }
 
+#iconTerminal{
+  cursor: pointer;
+}
+
 #iconComplete{
   filter: hue-rotate(50deg);
 }
@@ -100,6 +104,17 @@ select.vec-field{
   top:0px;
   display: flex;
   height: 50px;
+}
+
+.vec-select-firmware{
+  position:absolute;
+  top:60px;
+  display: flex;
+  height: 50px;
+  display: grid;
+    grid-template: 1fr / 1fr 1fr;
+    align-items: center;
+    gap: 0px;
 }
 
 .logo-anki {

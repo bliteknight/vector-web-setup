@@ -3,6 +3,7 @@
 const express = require("express");
 require('dotenv').config()
 const fs = require("fs");
+const http = require("http");
 const https = require("https");
 const cors = require("cors");
 const app = express();
@@ -44,14 +45,22 @@ function handleError(err){
       return;
   }
 }
-https.createServer({
-  key: privateKey,
-  cert: certificate
-}, app).listen(port, serverIp, () => {
+
+http.createServer(app).listen(port, serverIp, () => {
   console.log(`Server running on port ${port}`);
 }).on("error", (err) => {
   handleError(err);
 });
+
+
+// https.createServer({
+//   key: privateKey,
+//   cert: certificate
+// }, app).listen(port, serverIp, () => {
+//   console.log(`Server running on port ${port}`);
+// }).on("error", (err) => {
+//   handleError(err);
+// });
 
 //This is used to serve the non http ota files
 app.listen(otaport, serverIp, () => {

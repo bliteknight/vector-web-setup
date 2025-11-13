@@ -5,6 +5,8 @@
 <!-- Mirrored from ddl.io/vector-betatest/html/main.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Jun 2020 22:24:12 GMT -->
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Expires" content="-1">
 <title>Vector Setup</title>
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
@@ -19,11 +21,27 @@
   </div>
   <div class="vec-panel vec-panel-ui" style="flex: 1 0 50%">
     <div class="vec-status">
+      <img id="iconTerminal" src="../images/fontawesome/terminal.svg" src2="../images/common_icon_bluetooth_med.svg" class="vec-icon-active vec-icon vec-icon-sm">
       <img id="iconBle" src="../images/fontawesome/bluetooth-brands.svg" src2="../images/common_icon_bluetooth_med.svg" class="vec-icon-active vec-icon vec-icon-sm">
       <img id="iconWifi" src="../images/fontawesome/wifi-solid.svg" src2="../images/common_statusicon_wificonnect_med.svg" class="vec-icon vec-icon-ota">
       <img id="iconOta" src="../images/fontawesome/cloud-download-alt-solid.svg" src2="../images/common_icon_updatecloud_sml.svg" class="vec-icon vec-icon-ota">
       <img id="iconAccount" src="../images/fontawesome/user-circle-solid.svg" src2="../images/friends_icon_profileheadshot_sml.svg" class="vec-icon vec-icon-sm">
       <img id="iconSettings" src="../images/fontawesome/sliders-h-solid.svg" src2="../images/icon_settings.svg" class="vec-icon vec-icon-sm">
+    </div>
+    <div class="vec-select-firmware">
+      <h4>Select Firmware</h4>
+      <select id="selectedFirmware" style="padding: 10px; height: 40px;">
+        <option selected value="http://ota.techshop82.com/vector-ota/2.0.1.6086ep.ota">2.0.1.6086ep</option>        
+        <option value="http://ota.techshop82.com/vector-ota/2.0.1.6085ep.ota">2.0.1.6085ep</option>
+        <option value="http://ota.techshop82.com/vector-ota/vicos-2.0.1.6076ep.ota">2.0.1.607ep</option>
+        <option value="http://ota.techshop82.com/vector-ota/1.8.ep.ota">1.8ep</option>
+        <option value="http://ota.techshop82.com/vector-ota/1.7.3_6016ep.ota">1.7.3_6016ep</option>
+        <option value="http://ota.techshop82.com/vector-ota/1.6.0.3331.ota">1.6.0.3331</option>
+        <option value="http://ota.techshop82.com/vector-ota/1.6.0.3331ep.ota">1.6.0.3331ep</option>
+        <option value="http://ota.techshop82.com/vector-ota/1.5.0.3009.ota">1.5.0.3009</option>
+        <option value="http://ota.techshop82.com/vector-ota/1.4.1.2806.ota">1.4.1.2806</option>
+        <option value="http://ota.techshop82.com/vector-ota/1.4.1.2806ep.ota">1.4.1.2806ep</option>
+      </select>
     </div>
     <div id="containerIncompatible" class="vec-container vec-current" style="opacity: 1;">
       <div class="vec-row"><img src="../images/chrome.png" class="chrome-img"></div>
@@ -129,7 +147,7 @@
         <option value="metric">Metric</option>
       </select> <br><br>
       <input type="checkbox" id="checkboxEnableAlexa" name="enableAlexa" value="ankiAlexa">Enable Amazon Alexa. <br>
-      <input type="checkbox" id="checkboxDataAnalytics" name="dataAnalytics" value="ankiLog">Allow Digital Dream Labs to upload anonymized logs to improve Vector. <br><br> 
+      <!-- <input type="checkbox" id="checkboxDataAnalytics" name="dataAnalytics" value="ankiLog">Allow Digital Dream Labs to upload anonymized logs to improve Vector. <br><br>  -->
       <input type="button" id="btnFinishSetup" value="Save Settings" class="vec-field"/> 
     </div>
     <div id="containerOta" class="vec-container" icon="iconOta">
@@ -158,6 +176,7 @@
         <div id="vecInfoWifi" class="vec-info-row"><img src="../images/fontawesome/wifi-solid.svg" class="vec-status-icon"><span id="vecStatusSsid"></span></div>
         <div id="vecInfoBuild" class="vec-info-row"></div>
         <div id="vecInfoEsn" class="vec-info-row"></div>
+        <div id="vecInfoGuid" class="vec-info-row"></div>
       </div>
       <div id="boxStatusLogs" class="vec-info-box vec-hidden">
         <div id="btnDownloadLogs" class="vec-link">Download Logs</div>
@@ -174,10 +193,10 @@
 
     <div class="vec-ui-footer">
       <div class="vec-ui-footer-side">
-        <img src="../images/ddl_logo.png">
+        <img src="https://i0.wp.com/techshop82.com/wp-content/uploads/2022/06/TS82_logo.png">
       </div>
       <div class="vec-ui-footer-middle">
-        <span>© 2019-2020 Digital Dream Labs. All Rights Reserved. Icons used under CC 4.0 License, <a href="https://fontawesome.com/license/" target="_blank">Font Awesome.</a></span>
+        <span id="copyright"></span>
       </div>
       <div class="vec-ui-footer-side">
         <img src="../images/VectorLogo.svg"> 
@@ -205,6 +224,13 @@
 <script src="../js/pterm.js"></script>
 <script src="../js/rts.js"></script>
 <script src="../js/sodium.js" async></script>
+<script>
+  $(()=>{
+    var date = new Date();
+    document.getElementById("copyright").innerHTML ="© "+date.getFullYear()+" TechShop82. Icons used under CC 4.0 License , <a href='https://fontawesome.com/license/' target='_blank'>Font Awesome.</a>"
+  })
+  
+</script>
 </body>
 
 

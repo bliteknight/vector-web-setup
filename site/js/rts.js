@@ -825,6 +825,7 @@ let selectedNetwork = null;
 let scannedNetworks = [];
 let cloudSession = {};
 let _version = 0;
+let firmware = "";
 let _build = "prod";
 let _wifiCredentials = null;
 let urlParams = {};
@@ -876,6 +877,8 @@ function setBuildType() {
 }
 
 function getOtaUrl() {
+  return $("#selectedFirmware option:selected").val();
+
   if("otaUrl" in urlParams) {
     return urlParams["otaUrl"];
   } else {
@@ -969,15 +972,24 @@ function handleDisconnected() {
 }
 
 function doOta() {
-  if(_version == 2) {
-    rtsHandler.doOtaStart(getOtaUrl()).then(function(msg){
+  let firmwareURL = getOtaUrl();
+  let confirmFlash = true;
+
+  if(_version != 2 && (firmware.indexOf("ep") == -1 && firmware.indexOf("ankidev") ==-1)){
+    alert("A non EP firmware has been detected and you are not in recovery mode."+
+    " You will need to be in recovery mode for the flashing of the EP firmware to work. Please place your Vector in recovery mode and pair and try again");
+  }
+  enableLogPanel();
+
+  if(_version == 2) {    
+    rtsHandler.doOtaStart(firmwareURL).then(function(msg){
       console.log("ota success");
     }, function(msg){
       console.log(msg);
       $("#otaErrorLabel").removeClass("vec-hidden");
       $("#btnTryAgain").removeClass("vec-hidden");
     });
-    setPhase("containerOta");
+    setPhase("containerOta");    
   } else {
     toggleIcon("iconOta", true);
     //if (robotSoftware == "v1.8.1.6051") {
@@ -1018,6 +1030,21 @@ function setView(mode, animate) {
 }
 
 $(document).ready(function() {
+
+  // $("#iconTerminal").toggle(function(){
+  //     
+  //   }, function(){
+  //     $(".vec-shell").css("flex", "0 1 0%");
+  //   })
+
+  $("#iconTerminal").click(function(){
+    $(this).toggleClass("vec-icon-done")
+    if($(this).hasClass("vec-icon-done")){
+      $(".vec-shell").css("flex", "0 1 50%");
+    } else {
+      $(".vec-shell").css("flex", "0 1 0%");
+    }
+  })
   $(document).keydown(function(event) {
     if(event.altKey) {
       if(event.keyCode == 49) {
@@ -1243,7 +1270,24 @@ function updateStatusBox(m) {
     $("#vecInfoWifi").addClass("vec-hidden");
   }
   $("#vecInfoEsn").html(m.value.esn);
-  $("#vecInfoBuild").html(m.value.version.split("-")[0]);
+  if(m.value.version.split("_os")[0].indexOf("ankidev") != -1){
+    firmware = m.value.version.split("_os")
+  } else {
+    if(m.value.version.split("_os")[1]){
+      firmware = m.value.version.split("_os")[1].split("-")[0];
+    } else{
+      firmware = m.value.version.split("_os");
+    }
+    
+    if(firmware.length == 0){
+      firmware = m.value.version.split("-")[0];
+    }
+    if(firmware instanceof Array){
+      firmware = firmware[0];
+    }
+  }
+  
+  $("#vecInfoBuild").html(firmware);
   robotSoftware = m.value.version.split("-")[0]
   $("#vecStatusTitle").html(vecBle.bleName);
 
@@ -14090,6 +14134,11 @@ class VectorBluetooth {
           self.bleMsgProtocol.receiveRawBuffer(Array.from(new Uint8Array(event.target.value.buffer)));
         });
       });
+    })
+    .catch(e =>{
+      console.log(e.message);
+      alert("An error has occurred so the Page will reload, so take your Vector off the charger, then put in pairing mode and try again. If it keeps happening try pairing in incognito mode or you may have to clear your user setting to get a new bluetooth ID");
+      window.location.reload()
     });
   }
 
@@ -14101,7 +14150,9 @@ class VectorBluetooth {
       this.readChar.writeValue(msg).then(function() {
         self.writeReady = true;
       }, function(err) {
-        console.log(err);
+        console.log(err.message);
+        alert("An error has occurred so the Page will reload, so take your Vector off the charger, then put in pairing mode and try again. If it keeps happening try pairing in incognito mode or you may have to clear your user setting to get a new bluetooth ID");
+        window.location.reload()
       }); 
       this.writeQueue.shift();
     }
